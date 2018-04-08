@@ -29,6 +29,7 @@ body {
 }
 
 .content {
+	display: none;
 	margin-left: 200px;
 }
 
@@ -54,13 +55,17 @@ body {
 	color: #222d32;
 }
 
+.menu ul li.active:hover {
+	background: white;
+	color: #222d32;
+}
+
 .menu ul li:last-child{
 	border-bottom: 0px;
 }
 
 .menu ul li:hover {
-	background: white;
-	color: #222d32;
+	background: #596b73;
 }
 
 .accuracy {
@@ -70,16 +75,12 @@ body {
 
 .advance {
 	margin-left: 250px;
+	padding-right: 20px;
 }
 
 .subtitle {
 	text-align: center;
 	padding: 15px;
-}
-
-.btn-area {
-	padding-left: 24px;
-	padding-bottom: 10px;
 }
 
 .data-area {
@@ -104,13 +105,64 @@ textarea {
 	border-bottom: 1px solid #c1c1c1;
 }
 
+.level {
+	padding-bottom: 10px;
+	padding-left: 5px;
+	font-size: 14px;
+}
 
 
 
 
 
 
+.table {
+	width: 100%;
+	table-layout: fixed;
+}
 
+.table thead th {
+    background-color: rgb(9, 187, 7);
+    color: #fff;
+    border-bottom-width: 0;
+}
+
+.table td {
+    color: #000;
+    text-align: center;
+    max-width: 230px;
+}
+
+.table tr, .table th {
+    border-width: 1px;
+    border-style: solid;
+}
+
+.table td, .table th {
+    padding: 5px 15px;
+    font-size: 14px;
+    font-family: Verdana;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+a {
+	text-decoration:none;
+}
+
+a:visited, a:link, a:active {
+	color: black;
+}
+
+a:hover {
+	color: #3c8dbc;
+}
+
+i {
+	padding: 0px 5px;
+}
 
 .modal {
 	display: none;

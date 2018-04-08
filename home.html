@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<title>农场后台管理系统</title>
 	<link rel="stylesheet" type="text/css" href="css/basic.css">
+	<link rel="stylesheet" type="text/css" href="plugins/FontAwesome/css/font-awesome.min.css">
 </head>
 <body>
 	<div class="page">
@@ -14,26 +15,22 @@
 		</div>
 		<div class="menu">
 			<ul>
-				<li>function1</li>
-				<li class="active">function2</li>
+				<li>邀请数</li>
+				<li>function2</li>
 				<li>function3</li>
 			</ul>
 		</div>
 		<div class="content">
-			<div class="accuracy">
+			<!-- <div class="accuracy">
 				<div class="subtitle">
 					查询列表
-				</div>
-				<div class="btn-area">
-					<input type="file">
-					<button type="button">导入</button>
 				</div>
 				<div class="data-area">
 					<textarea class="search-list" placeholder="每行一条数据"></textarea>
 				</div>
-			</div>
-			<div class="advance">
-				<div class="subtitle">客户基本信息</div>
+			</div> -->
+			<!-- <div class="advance">
+				<div id="pagetitle" class="subtitle"></div>
 				<div class="filter">
 					<p>筛选：</p>
 				</div>
@@ -42,12 +39,47 @@
 				</div>
 				<div class="results">
 					<p>查询结果：</p>
+					<div class="level">
+						<span>All</span>
+						<i class="fa fa-angle-right"></i>
+						<a href="javascript:;">19310101010</a>
+						<i class="fa fa-angle-right"></i>
+						<a href="javascript:;">19310234010</a>
+						<i class="fa fa-angle-right"></i>
+						<a href="javascript:;">19316520103</a>
+					</div>
+					<div class="datatable">
+						<table class="table">
+							<tr>
+								<th>账号</th>
+								<th>昵称</th>
+								<th>一级邀请数</th>
+								<th>总邀请数</th>
+								<th>邀请详情</th>
+							</tr>
+							<tr>
+								<td>19310101010</td>
+								<td>aa</td>
+								<td>111</td>
+								<td>1234</td>
+								<td><a href="javascript:;">查看</a></td>
+							</tr>
+							<tr>
+								<td>19310234010</td>
+								<td>bb</td>
+								<td>10</td>
+								<td>34</td>
+								<td><a href="javascript:;">查看</a></td>
+							</tr>
+						</table>
+					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 	<div class="modal">modal</div>
 	<script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
 	<script type="text/javascript" src="js/basic.js"></script>
+	<script type="text/javascript" src="js/functions.js"></script>
 </body>
 </html>
