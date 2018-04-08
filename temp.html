@@ -1,15 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<meta charset="utf-8">
+	<title>邀请数</title>
 </head>
 <body>
-	<input id="phone" type="text">
-	<button id="search" type="button">查询</button>
+	<div>
+		<input id="phone" type="text">
+		<button id="search" type="button">查询</button>
+	</div>
+	<div>
+		<span id="searchphone"></span>
+		<span>：共</span>
+		<span id="num"></span>
+	</div>
 	<table>
 		<tr>
 			<th>手机号</th>
+			<th>邀请列表</th>
 		</tr>
+		<tbody id="results"></tbody>
 	</table>
 </body>
 <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
@@ -20,6 +30,7 @@
 	});
 
 	function searchsingle(phone) {
+		$("#searchphone").html(phone);
 		$.ajax({
 			type: "post",
 			async: false,
@@ -29,7 +40,13 @@
 			},
 			dataType: "json",
 			success: function (data) {
-				
+				tbody = $("#results");
+				tbody.html("");
+				$("#num").html(data.data.length);
+				for (var i = 0; i < data.data.length; i++) {
+					var tr = '<td>'+ data.data[i].phone +'</td><td><a href="javascript:;" onclick="searchsingle('+ data.data[i].phone +')">查看</a></td>'
+					tbody.append(tr);
+				}
 			}
 		});
 	}
