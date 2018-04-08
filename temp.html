@@ -9,30 +9,25 @@
 		<input id="phone" type="text">
 		<button id="search" type="button">查询</button>
 	</div>
+	<div id="phonearea"></div>
 	<div>
 		<span id="searchphone"></span>
-		<span>：共</span>
-		<span id="num"></span>
 	</div>
-	<table>
-		<tr>
-			<th>手机号</th>
-			<th>邀请列表</th>
-		</tr>
-		<tbody id="results"></tbody>
-	</table>
+	<table></table>
 </body>
 <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
 <script>
 	$("#search").click(function(){
 		var phone = $("#phone").val();
 		searchsingle(phone);
+		$("#phone").val("");
 	});
 
 	function searchsingle(phone) {
-		$("#searchphone").html(phone);
+		var span = '<a href="javascript:;" onclick="level(' + phone + ',this)">' + phone + '</a>' + '<span>' + '-' + '</span>';
+		$("#phonearea").append(span);
 		$.ajax({
-			type: "post",
+			type: "get",
 			async: false,
 			url: "/invite/childByphone",
 			data:{
@@ -40,15 +35,25 @@
 			},
 			dataType: "json",
 			success: function (data) {
-				tbody = $("#results");
-				tbody.html("");
-				$("#num").html(data.data.length);
+				var table = $("table");
+				var tbody = "<tbody>";
+				table.html("");
+				var thead = '<thead><tr><th>手机号</th><th>邀请列表</th></tr></thead>';
+				table.append(thead);
+				$("#searchphone").html("用户" + phone + "共有" + data.data.length + "邀请数");
 				for (var i = 0; i < data.data.length; i++) {
-					var tr = '<td>'+ data.data[i].phone +'</td><td><a href="javascript:;" onclick="searchsingle('+ data.data[i].phone +')">查看</a></td>'
-					tbody.append(tr);
+					var tr = '<tr><td>'+ data.data[i].childPlayerPhone +'</td><td><a href="javascript:;" onclick="searchsingle('+ data.data[i].childPlayerPhone +')">查看</a></td></tr>'
+					tbody += tr;
 				}
+				tbody =+ "</tbody>";
+				table.append(tbody);
 			}
 		});
+	}
+
+	function level(phone,e) {
+		searchsingle(phone);
+		$(e).nextAll().remove();
 	}
 </script>
 </html>
