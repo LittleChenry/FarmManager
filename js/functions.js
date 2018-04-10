@@ -1,11 +1,23 @@
-function invitation(e) {
-	var title = "邀请数";
-	var tableth = new Array("账号","昵称","下一级邀请数","总邀请数","邀请详情");
+function userInfo() {
+	var title = "用户基本信息";
+	var tableth = new Array("用户id","服务器id","手机号","注册时间","注册ip","昵称","红包","余额","设置");
 	contentMain(title,tableth);
-	
+	var pages = '<a class="pages-a"><i class="fa fa-angle-double-left"></i></a>'
+		+ '<a class="pages-a current">1</a><a class="pages-a">2</a><span>……</span>'
+		+ '<a class="pages-a">100</a><a class="pages-a"><i class="fa fa-angle-double-right"></i></a>'
+		+ '<input class="compact" type="text" placeholder="跳转到"><span class="fa fa-hand-o-right"></span>';
+	$(".pages").append(pages);
 }
 
-function defaultFunction(e) {
+function invitation() {
+	var title = "邀请统计";
+	var tableth = new Array("层级","邀请数","有效客户","已奖励数","操作");
+	contentMain(title,tableth);
+	$("#multiinput").attr("disabled",true);
+	$("#advance").attr("disabled",true);
+}
+
+function defaultFunction() {
 	var content = $(".content");
 	content.html("");
 	
@@ -14,24 +26,30 @@ function defaultFunction(e) {
 function contentMain(title,tableth) {
 	var content = $(".content");
 	content.html("");
-	var accuracy = '<div class="accuracy"><div class="subtitle">查询列表</div><div class="data-area">'
-		+ '<textarea class="search-list" placeholder="每行一条数据"></textarea></div></div>';
-	var advance = '<div class="advance"><div id="pagetitle" class="subtitle">邀请数</div><div class="filter">'
-		+ '<p>筛选：</p></div><div class="sort"><p>排序：</p></div><div class="results"><p>查询结果：</p>'
-		+ '<div class="level"><span>全部</span><i class="fa fa-angle-right"></i></div><div class="datatable">'
-		+ '<table class="table"><tr>';
+	var titlecontent = '<div id="pagetitle" class="subtitle">'+ title +'</div>';
+	var advancecontent = '<div class="search-area"><input type="text" class=""><button id="multiinput" type="button" class="">'
+		+ '批量导入</button><button id="advance" type="button" class="">高级选项</button><button type="button" class="">'
+		+ '查询结果</button><button type="button" class="">导出Excel</button><div class="advance-area">'
+		+ '<div class="filter"><span>筛选：</span></div><div class="sort"><span>排序：</span></div></div></div>';
+	var resultcontent = '<div class="results"><div class="datatable"><div class="pages"></div><div><table class="table"><tr>';
 	for (var i = 0; i < tableth.length; i++) {
-		advance = advance + '<th>'+ tableth[i] +'</th>';
+		resultcontent = resultcontent + '<th>'+ tableth[i] +'</th>';
 	}
-	advance	+= '</tr></table></div></div></div>';
-	content.append(accuracy);
-	content.append(advance);
-	adjustContent();
+	resultcontent	+= '</tr></table></div></div></div></div>';
+	content.append(titlecontent);
+	content.append(advancecontent);
+	content.append(resultcontent);
+	actionInit();
 }
 
-function adjustContent() {
-	windowheight = $(window).height();
-	actualheight = windowheight > 700 ? windowheight : 700;
-	$(".accuracy").height(actualheight - headerheight);
-	$(".search-list").height(actualheight - headerheight - 70);
+function actionInit() {
+	$("#advance").unbind("click").bind("click",function(){
+		$(".advance-area").slideToggle();
+	});
+	$("#multiinput").unbind("click").bind("click",function(){
+		$(".modal").fadeIn();
+	});
+	$(".close").unbind("click").bind("click",function(){
+		$(this).parents(".modal").fadeOut();
+	});
 }

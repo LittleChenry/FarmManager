@@ -13,10 +13,10 @@ function AdjustPage() {
 	headerheight = 50;
 	actualheight = windowheight > 700 ? windowheight : 700;
 	actualwidth = windowwidth > 1200 ? windowwidth : 1200;
+	$(".page").width(actualwidth);
 	$(".header").height(headerheight);
 	$(".menu").height(actualheight - headerheight);
 	$(".content").height(actualheight - headerheight);
-	$(".accuracy").height(actualheight - headerheight);
 	$(".search-list").height(actualheight - headerheight - 70);
 	$(".page").show();
 }
@@ -28,18 +28,22 @@ function MenuToggle() {
 			if (!($(this).hasClass("active"))) {
 				$(this).addClass("active").siblings().removeClass("active");
 			}
-			ChooseFunction(e.data.index,this);
+			ChooseFunction(e.data.index);
 			$(".content").show();
 		});
 	})
 }
 
-function ChooseFunction(num,e) {
+function ChooseFunction(num) {
 	switch(num){
 		case 0:
-			invitation(e);
+			userInfo();
+			break;
+		case 1:
+			invitation();
 			break;
 		default:
-			defaultFunction(e);
+			defaultFunction();
 	}
 }
+

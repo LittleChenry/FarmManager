@@ -21,11 +21,11 @@
 		var phone = $("#phone").val();
 		searchsingle(phone);
 		$("#phone").val("");
+		$("#phonearea").html("");
 	});
 
 	function searchsingle(phone) {
-		var span = '<a href="javascript:;" onclick="level(' + phone + ',this)">' + phone + '</a>' + '<span>' + '-' + '</span>';
-		$("#phonearea").append(span);
+		
 		$.ajax({
 			type: "get",
 			async: false,
@@ -35,6 +35,8 @@
 			},
 			dataType: "json",
 			success: function (data) {
+				var aspan = '<a href="javascript:;" onclick="level(' + phone + ',this)">' + phone + '</a>' + '<span>' + ' ' + '</span>';
+				$("#phonearea").append(aspan);
 				var table = $("table");
 				var tbody = "<tbody>";
 				table.html("");

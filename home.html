@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<title>农场后台管理系统</title>
 	<link rel="stylesheet" type="text/css" href="css/basic.css">
-	<link rel="stylesheet" type="text/css" href="plugins/FontAwesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 	<div class="page">
@@ -15,69 +15,88 @@
 		</div>
 		<div class="menu">
 			<ul>
-				<li>邀请数</li>
-				<li>function2</li>
-				<li>function3</li>
+				<li><i class="fa fa-angle-right"></i>用户信息</li>
+				<li><i class="fa fa-angle-right"></i>邀请统计</li>
+				<li><i class="fa fa-angle-right"></i>function3</li>
 			</ul>
 		</div>
 		<div class="content">
-			<!-- <div class="accuracy">
-				<div class="subtitle">
-					查询列表
-				</div>
-				<div class="data-area">
-					<textarea class="search-list" placeholder="每行一条数据"></textarea>
-				</div>
-			</div> -->
-			<!-- <div class="advance">
-				<div id="pagetitle" class="subtitle"></div>
-				<div class="filter">
-					<p>筛选：</p>
-				</div>
-				<div class="sort">
-					<p>排序：</p>
-				</div>
-				<div class="results">
-					<p>查询结果：</p>
-					<div class="level">
-						<span>All</span>
-						<i class="fa fa-angle-right"></i>
-						<a href="javascript:;">19310101010</a>
-						<i class="fa fa-angle-right"></i>
-						<a href="javascript:;">19310234010</a>
-						<i class="fa fa-angle-right"></i>
-						<a href="javascript:;">19316520103</a>
+			<div id="pagetitle" class="subtitle">用户信息</div>
+			<div class="search-area">
+				<input type="text" class="">
+				<button type="button" class="">批量导入</button>
+				<button type="button" class="">高级选项</button>
+				<button type="button" class="">查询结果</button>
+				<button type="button" class="">导出Excel</button>
+				<div class="advance-area" style="display: block;">
+					<div class="filter">
+						<span>筛选：</span>
+						邀请时间：
+						<input type="datetime-local">
+						<span>-</span>
+						<input type="datetime-local">
 					</div>
-					<div class="datatable">
-						<table class="table">
-							<tr>
-								<th>账号</th>
-								<th>昵称</th>
-								<th>一级邀请数</th>
-								<th>总邀请数</th>
-								<th>邀请详情</th>
-							</tr>
-							<tr>
-								<td>19310101010</td>
-								<td>aa</td>
-								<td>111</td>
-								<td>1234</td>
-								<td><a href="javascript:;">查看</a></td>
-							</tr>
-							<tr>
-								<td>19310234010</td>
-								<td>bb</td>
-								<td>10</td>
-								<td>34</td>
-								<td><a href="javascript:;">查看</a></td>
-							</tr>
-						</table>
+					<div class="sort">
+						<span>排序：</span>
+						<select>
+							<option>账号</option>
+							<option>昵称</option>
+							<option>一级邀请数</option>
+							<option>总邀请数</option>
+						</select>
+						<select>
+							<option>升序</option>
+							<option>降序</option>
+						</select>
 					</div>
 				</div>
-			</div> -->
+			</div>
+			<div class="results">
+				<div class="datatable">
+					<div class="pages">
+						<a>1</a>
+						<a class="current">2</a>
+						<span>……</span>
+						<a>100</a>
+						<input type="text" placeholder="跳转">
+						<i class="fa fa-hand-o-right"></i>
+					</div>
+					<table class="table">
+						<tr>
+							<th>账号</th>
+							<th>昵称</th>
+							<th>一级邀请数</th>
+							<th>总邀请数</th>
+							<th>邀请详情</th>
+						</tr>
+						<tr>
+							<td>19310101010</td>
+							<td>aa</td>
+							<td>111</td>
+							<td>1234</td>
+							<td><a href="javascript:;">查看</a></td>
+						</tr>
+						<tr>
+							<td>19310234010</td>
+							<td>bb</td>
+							<td>10</td>
+							<td>34</td>
+							<td><a href="javascript:;">查看</a></td>
+						</tr>
+					</table>
+				</div>
+			</div>
 		</div>
 	</div>
-	<div class="modal">modal</div>
+	<div class="modal">
+		<div class="data-area">
+			<p class="text-right"><i class="fa fa-close close"></i></p>
+			<textarea class="search-list" placeholder="每行一条数据"></textarea>
+			<div class="btn-area">
+				<button type="button">导入</button>
+			</div>
+		</div>
+	</div>
 	<script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
 	<script type="text/javascript" src="js/basic.js"></script>
 	<script type="text/javascript" src="js/functions.js"></script>

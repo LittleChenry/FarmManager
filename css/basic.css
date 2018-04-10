@@ -29,8 +29,9 @@ body {
 }
 
 .content {
-	display: none;
+	/*display: none;*/
 	margin-left: 200px;
+	overflow: auto;
 }
 
 .menu ul {
@@ -68,23 +69,42 @@ body {
 	background: #596b73;
 }
 
-.accuracy {
-	position: absolute;
-	width: 250px;
+.advance-area {
+	display: none;
+	padding: 10px 15px 2px 15px;
+	font-size: 14px;
 }
 
-.advance {
-	margin-left: 250px;
-	padding-right: 20px;
+.filter {
+	padding-bottom: 10px;
+}
+
+.results {
+	margin: 10px 20px;
 }
 
 .subtitle {
 	text-align: center;
 	padding: 15px;
+	font-weight: 600;
+}
+
+.search-area {
+	background-color: wheat;
+	margin: 0px 20px;
+	padding: 10px;
 }
 
 .data-area {
 	text-align: center;
+    width: 380px;
+    margin: 10px auto;
+    background-color: white;
+}
+
+.btn-area {
+	height: 40px;
+	padding-top: 10px;
 }
 
 input[type="file"] {
@@ -92,7 +112,7 @@ input[type="file"] {
 }
 
 textarea {
-	width: 200px;
+	width: 300px;
 }
 
 .right-border {
@@ -111,14 +131,58 @@ textarea {
 	font-size: 14px;
 }
 
+.pages {
+    text-align: right;
+    padding: 5px 0px;
+}
+
+.pages-a {
+	display: inline-block;
+    text-align: center;
+    height: 22px;
+    min-width: 19px;
+    padding: 3px 4px 0px 3px;
+    margin-right: 8px;
+    border: 1px solid;
+}
+
+.pages a:hover {
+	background-color: #3c8dbc;
+	border-color: #3c8dbc;
+	color: white;
+}
+
+.pages span:hover {
+	color: #3c8dbc;
+}
+
+.pages span {
+	cursor: pointer;
+    margin-left: 8px;
+}
+
+.current {
+	background-color: #3c8dbc;
+	border-color: #3c8dbc;
+	color: white;
+}
+
+.compact {
+	height: 21px;
+    width: 40px;
+    outline: none;
+}
 
 
 
-
+.text-right {
+	text-align: right;
+}
 
 .table {
-	width: 100%;
+	max-width: 100%;
 	table-layout: fixed;
+	margin: auto;
 }
 
 .table thead th {
@@ -141,6 +205,7 @@ textarea {
 .table td, .table th {
     padding: 5px 15px;
     font-size: 14px;
+    width: 150px;
     font-family: Verdana;
     font-weight: bold;
     overflow: hidden;
@@ -150,6 +215,7 @@ textarea {
 
 a {
 	text-decoration:none;
+	cursor: pointer;
 }
 
 a:visited, a:link, a:active {
@@ -162,6 +228,11 @@ a:hover {
 
 i {
 	padding: 0px 5px;
+	cursor: pointer;
+}
+
+button {
+	margin-left: 10px;
 }
 
 .modal {
