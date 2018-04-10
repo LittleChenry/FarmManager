@@ -27,7 +27,7 @@ function contentMain(title,tableth) {
 	var content = $(".content");
 	content.html("");
 	var titlecontent = '<div id="pagetitle" class="subtitle">'+ title +'</div>';
-	var advancecontent = '<div class="search-area"><input type="text" class=""><button id="multiinput" type="button" class="">'
+	var advancecontent = '<div class="search-area"><input type="text" id="search" class=""><button id="multiinput" type="button" class="">'
 		+ '批量导入</button><button id="advance" type="button" class="">高级选项</button><button type="button" class="">'
 		+ '查询结果</button><button type="button" class="">导出Excel</button><div class="advance-area">'
 		+ '<div class="filter"><span>筛选：</span></div><div class="sort"><span>排序：</span></div></div></div>';

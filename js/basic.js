@@ -47,3 +47,9 @@ function ChooseFunction(num) {
 	}
 }
 
+$("#input").unbind("click").bind("click",function(){
+	var str=$("#numbers").val();
+ 	str=str.replace(/\n/g, ";").replace(/\r/g, ';');
+ 	$("#search").val(str);
+ 	$(".modal").fadeOut();
+});
