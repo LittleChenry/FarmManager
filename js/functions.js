@@ -15,6 +15,9 @@ function invitation() {
 	contentMain(title,tableth);
 	$("#multiinput").attr("disabled",true);
 	$("#advance").attr("disabled",true);
+	$("#query").unbind("click").bind("click",function(){
+		queryinvite($("#search").val());
+	});
 }
 
 function defaultFunction() {
@@ -28,7 +31,7 @@ function contentMain(title,tableth) {
 	content.html("");
 	var titlecontent = '<div id="pagetitle" class="subtitle">'+ title +'</div>';
 	var advancecontent = '<div class="search-area"><input type="text" id="search" class=""><button id="multiinput" type="button" class="">'
-		+ '批量导入</button><button id="advance" type="button" class="">高级选项</button><button type="button" class="">'
+		+ '批量导入</button><button id="advance" type="button" class="">高级选项</button><button id="query" type="button" class="">'
 		+ '查询结果</button><button type="button" class="">导出Excel</button><div class="advance-area">'
 		+ '<div class="filter"><span>筛选：</span></div><div class="sort"><span>排序：</span></div></div></div>';
 	var resultcontent = '<div class="results"><div class="datatable"><div class="pages"></div><div><table class="table"><tr>';
@@ -38,7 +41,7 @@ function contentMain(title,tableth) {
 	resultcontent	+= '</tr></table></div></div></div></div>';
 	content.append(titlecontent);
 	content.append(advancecontent);
-	content.append(resultcontent);
+	content.append(resultcontent);	
 	actionInit();
 }
 
@@ -52,4 +55,27 @@ function actionInit() {
 	$(".close").unbind("click").bind("click",function(){
 		$(this).parents(".modal").fadeOut();
 	});
+}
+
+function queryinvite(phone){	
+	$.ajax({
+			type: "get",
+			async: false,
+			url: "/invite/posterityStatistics",
+			data:{
+				phone:phone
+			},
+			dataType: "json",
+			success: function (data) {
+				var table=$("table");
+				var tbody="<tbody>";
+				for (var i = 0; i < data.data.length; i++) {
+					var tr = '<tr><td>'+i+'</td><td>'+ data.data[i].total +'</td><td>'+data.data[i].valid+'</td><td></td><td></td></tr>'
+					tbody += tr;
+				}
+				tbody += "</tbody>";
+				table.append(tbody);
+			}
+		});
+
 }
