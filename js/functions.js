@@ -15,6 +15,8 @@ function invitation() {
 	contentMain(title,tableth);
 	$(".advance-area").prepend('<div class="param"></div>');
 	$(".advance-area").prepend('<div class="param1"></div>');
+	$(".param1").append('<span>开始时间：</span><input id="starttime" type="datetime-local" class="" >');
+	$(".param1").append('<span>结束时间：</span><input id="endtime" type="datetime-local" class="" >');
 	$(".param1").append('<span>有效消费总额：</span><input id="validspending" type="text" class="" >');
 	$(".param1").append('<span>有效消费余额：</span><input id="validspendingcharge" type="text" class="" >');
 	$(".param").append('<span>用户总数权重：</span><input id="totaluser" type="text" class="" >');
@@ -101,6 +103,8 @@ function submitparam(){
 	var validspendingcharge=$("#validspendingcharge").val();
 	var totaluser=$("#totaluser").val();
 	var validuser=$("#validuser").val();
+	var starttime=$("#starttime").val();
+	var endtime=$("#endtime").val();
 	var Totalrecharge=$("#Totalrecharge").val();
 	var Totalspending=$("#Totalspending").val();
 	var Totalspendingcharge=$("#Totalspendingcharge").val();
@@ -109,13 +113,10 @@ function submitparam(){
 			async: false,
 			url: "/invite/ ",
 			data:{
-				validspending:validspending,
-				validspendingcharge:validspendingcharge,
-				totaluser:totaluser,
-				validuser:validuser,
-				Totalrecharge:Totalrecharge,
-				Totalspending:Totalspending,
-				Totalspendingcharge:Totalspendingcharge
+				totalConsume:validspending,
+				chargeConsume:validspendingcharge,
+				startTime:starttime,
+				endTime:endtime				
 			},
 			dataType: "json",
 			success: function (data) {
