@@ -98,7 +98,7 @@ function queryinvite(phone){
 			async: false,
 			url: "/invite/redEnvelope",
 			data:{
-				phone:phone,
+				phone:list,
 				totalConsume:validspending,
 				chargeConsume:validspendingcharge,
 				startTime:starttime,
