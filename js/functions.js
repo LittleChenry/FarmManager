@@ -84,7 +84,7 @@ function queryinvite(phone){
 	var validuser=$("#validuser").val();
 	var starttime=$("#starttime").val();
 	var endtime=$("#endtime").val();
-	alert(starttime);
+	
 	var startdate=new Date(starttime);
 	var enddate=new Date(endtime);
 	starttime=startdate.getTime()/1000;
@@ -93,30 +93,30 @@ function queryinvite(phone){
 	var Totalspending=$("#Totalspending").val();
 	var Totalspendingcharge=$("#Totalspendingcharge").val();
 	console.log(list);
-	// $.ajax({
-	// 		type: "get",
-	// 		async: false,
-	// 		url: "/invite/redEnvelope",
-	// 		data:{
-	// 			phone:phone,
-	// 			totalConsume:validspending,
-	// 			chargeConsume:validspendingcharge,
-	// 			startTime:starttime,
-	// 			endTime:endtime
-	// 		},
-	// 		dataType: "json",
-	// 		success: function (data) {
-	// 			// var table=$("table");
-	// 			// var tbody="<tbody>";
-	// 			// for (var i = 0; i < data.data.length; i++) {
-	// 			// 	var tr = '<tr><td>'+i+'</td><td>'+ data.data[i].total +'</td><td>'+data.data[i].valid+'</td><td></td><td></td></tr>'
-	// 			// 	tbody += tr;
-	// 			// }
-	// 			// tbody += "</tbody>";
-	// 			// table.append(tbody);
-	// 			alert(data.data);
-	// 		}
-	// 	});
+	$.ajax({
+			type: "get",
+			async: false,
+			url: "/invite/redEnvelope",
+			data:{
+				phone:phone,
+				totalConsume:validspending,
+				chargeConsume:validspendingcharge,
+				startTime:starttime,
+				endTime:endtime
+			},
+			dataType: "json",
+			success: function (data) {
+				// var table=$("table");
+				// var tbody="<tbody>";
+				// for (var i = 0; i < data.data.length; i++) {
+				// 	var tr = '<tr><td>'+i+'</td><td>'+ data.data[i].total +'</td><td>'+data.data[i].valid+'</td><td></td><td></td></tr>'
+				// 	tbody += tr;
+				// }
+				// tbody += "</tbody>";
+				// table.append(tbody);
+				alert(data.data);
+			}
+		});
 }
 
 // function submitparam(){	
