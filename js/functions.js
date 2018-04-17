@@ -15,10 +15,11 @@ function invitation() {
 	contentMain(title,tableth);
 	$(".advance-area").prepend('<div class="param"></div>');
 	$(".advance-area").prepend('<div class="param1"></div>');
-	$(".param1").append('<span>开始时间：</span><input id="starttime" type="datetime-local" class="" >');
-	$(".param1").append('<span>结束时间：</span><input id="endtime" type="datetime-local" class="" >');
+	
 	$(".param1").append('<span>有效消费总额：</span><input id="validspending" type="text" class="" >');
 	$(".param1").append('<span>有效消费余额：</span><input id="validspendingcharge" type="text" class="" >');
+	$(".param1").append('<span>开始时间：</span><input id="starttime" type="date" class="" >');
+	$(".param1").append('<span>结束时间：</span><input id="endtime" type="date" class="" >');
 	$(".param").append('<span>用户总数权重：</span><input id="totaluser" type="text" class="" >');
 	$(".param").append('<span>有效用户权重：</span><input id="validuser" type="text" class="" >');
 	$(".param").append('<span>充值总额权重：</span><input id="Totalrecharge" type="text" class="" >');
@@ -76,54 +77,74 @@ function actionInit() {
 }
 
 function queryinvite(phone){
-	var list=phone.split(";");
-	$.ajax({
-			type: "get",
-			async: false,
-			url: "/invite/posterityStatistics",
-			data:{
-				phone:list
-			},
-			dataType: "json",
-			success: function (data) {
-				// var table=$("table");
-				// var tbody="<tbody>";
-				// for (var i = 0; i < data.data.length; i++) {
-				// 	var tr = '<tr><td>'+i+'</td><td>'+ data.data[i].total +'</td><td>'+data.data[i].valid+'</td><td></td><td></td></tr>'
-				// 	tbody += tr;
-				// }
-				// tbody += "</tbody>";
-				// table.append(tbody);
-			}
-		});
-}
-
-function submitparam(){	
+	var list=phone.split(";");	
 	var validspending=$("#validspending").val();
 	var validspendingcharge=$("#validspendingcharge").val();
 	var totaluser=$("#totaluser").val();
 	var validuser=$("#validuser").val();
 	var starttime=$("#starttime").val();
 	var endtime=$("#endtime").val();
+	alert(starttime);
+	var startdate=new Date(starttime);
+	var enddate=new Date(endtime);
+	starttime=startdate.getTime()/1000;
+	endtime=enddate.getTime()/1000;
 	var Totalrecharge=$("#Totalrecharge").val();
 	var Totalspending=$("#Totalspending").val();
 	var Totalspendingcharge=$("#Totalspendingcharge").val();
-	$.ajax({
-			type: "get",
-			async: false,
-			url: "/invite/ ",
-			data:{
-				totalConsume:validspending,
-				chargeConsume:validspendingcharge,
-				startTime:starttime,
-				endTime:endtime				
-			},
-			dataType: "json",
-			success: function (data) {
-				alert("提交成功");
-			}
-		});
+	console.log(list);
+	// $.ajax({
+	// 		type: "get",
+	// 		async: false,
+	// 		url: "/invite/redEnvelope",
+	// 		data:{
+	// 			phone:phone,
+	// 			totalConsume:validspending,
+	// 			chargeConsume:validspendingcharge,
+	// 			startTime:starttime,
+	// 			endTime:endtime
+	// 		},
+	// 		dataType: "json",
+	// 		success: function (data) {
+	// 			// var table=$("table");
+	// 			// var tbody="<tbody>";
+	// 			// for (var i = 0; i < data.data.length; i++) {
+	// 			// 	var tr = '<tr><td>'+i+'</td><td>'+ data.data[i].total +'</td><td>'+data.data[i].valid+'</td><td></td><td></td></tr>'
+	// 			// 	tbody += tr;
+	// 			// }
+	// 			// tbody += "</tbody>";
+	// 			// table.append(tbody);
+	// 			alert(data.data);
+	// 		}
+	// 	});
 }
+
+// function submitparam(){	
+// 	var validspending=$("#validspending").val();
+// 	var validspendingcharge=$("#validspendingcharge").val();
+// 	var totaluser=$("#totaluser").val();
+// 	var validuser=$("#validuser").val();
+// 	var starttime=$("#starttime").val();
+// 	var endtime=$("#endtime").val();
+// 	var Totalrecharge=$("#Totalrecharge").val();
+// 	var Totalspending=$("#Totalspending").val();
+// 	var Totalspendingcharge=$("#Totalspendingcharge").val();
+// 	$.ajax({
+// 			type: "get",
+// 			async: false,
+// 			url: "/invite/ ",
+// 			data:{
+// 				totalConsume:validspending,
+// 				chargeConsume:validspendingcharge,
+// 				startTime:starttime,
+// 				endTime:endtime				
+// 			},
+// 			dataType: "json",
+// 			success: function (data) {
+// 				alert("提交成功");
+// 			}
+// 		});
+// }
 var tableToExcel = (function() {
     var uri = 'data:application/vnd.ms-excel;base64,',
     template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" '
