@@ -21,6 +21,9 @@ function invitation() {
 	$("#query").unbind("click").bind("click",function(){
 		QueryInvite($("#search").val());
 	});
+	$("#refresh").unbind("click").bind("click",function(){
+		LoadCache();
+	});
 	$("#validspending").val(0);
 	$("#validspendingcharge").val(0);
 	var currentDate = new Date();
@@ -87,22 +90,22 @@ function QueryInvite(phone) {
 	starttime = startdate.getTime() / 1000;
 	endtime = enddate.getTime() / 1000;
 	$.ajax({
-			type: "get",
-			async: true,
-			url: "/statistics",
-			data:{
-				phone : phone,
-				totalConsume : validspending,				
-				startTime : starttime,
-				endTime : endtime
-			},
-			dataType: "json",
-			success: function (data) {
-				//console.log(data);
-				CreateInviteTable(data,info);
-				//console.log( Object.keys(data.data[0].level).length);
-			}
-		});
+		type: "get",
+		async: true,
+		url: "/statistics",
+		data:{
+			phone : phone,
+			totalConsume : validspending,				
+			startTime : starttime,
+			endTime : endtime
+		},
+		dataType: "json",
+		success: function (data) {
+			//console.log(data);
+			CreateInviteTable(data,info);
+			//console.log( Object.keys(data.data[0].level).length);
+		}
+	});
 }
 
 function CreateInviteTable(data,info){
@@ -145,6 +148,14 @@ function CreateInviteTable(data,info){
 		}	
 		$("tr:eq("+row+") td:eq(6)").html(total[i].toFixed(2));
 	}
+}
+
+function LoadCache(){
+	$.ajax({
+		type: "post",
+		async: true,
+		url: "/initCache"
+	});
 }
 
 var tableToExcel = (function() {
