@@ -16,7 +16,7 @@ function invitation() {
 	$(".filter span").after('<ul></ul>');
 	$(".filter ul").append('<li><span>查询时间范围：<input id="starttime" type="datetime-local" class="" > - <input id="endtime" type="datetime-local" class="" ></span><span>有效消费总额≥<input id="validspending" type="number" class="" placeholder="￥"></span></li>');
 	//$(".filter ul").append('<li><span>有效消费总额≥<input id="validspending" type="number" class="" placeholder="￥"></span></li>');
-	$(".filter ul").append('<li><span>有效用户权重 = <input id="validuser" type="number" class="" value=0.1></span><span>消费总额权重 = <input id="Totalspending" type="number" class="" value=0.1></span><span>有效用户递减系数 = <input id="validuserreduce" type="number" class="" value=0.1></span><span>消费总额递减系数 = <input id="Totalspendingreduce" type="number" class="" value=0.1></span></li>');
+	$(".filter ul").append('<li><span>有效用户权重= <input id="validuser" type="number" class="" value=0.1></span><span>消费总额权重= <input id="Totalspending" type="number" class="" value=0.1></span><span>有效用户递减系数= <input id="validuserreduce" type="number" class="" value=0.1></span><span>消费总额递减系数= <input id="Totalspendingreduce" type="number" class="" value=0.1></span></li>');
 	$("#output").after('<button id="refresh" type="button" class="">刷新数据</button>');
 	$("#query").unbind("click").bind("click",function(){
 		QueryInvite($("#search").val());
@@ -41,7 +41,7 @@ function contentMain(title,tableth) {
 	var advancecontent = '<div class="search-area"><input type="text" id="search" class="" placeholder="输入手机号码，以;分隔"><button id="multiinput" type="button" class="">'
 		+ '批量导入</button><button id="advance" type="button" class="">高级选项<i class="fa fa-angle-double-up"></i></button><button id="query" type="button" class="" style="margin-right:40px;">'
 		+ '查询结果</button><button type="button" id="output" class="">导出Excel</button><div class="advance-area">'
-		+ '<div class="filter"><span>筛选：</span></div><div class="sort"><span>排序：</span></div></div></div>';
+		+ '<div class="filter"><span>筛选：</span></div><!-- <div class="sort"><span>排序：</span></div> --></div></div>';
 	var resultcontent = '<div class="results"><div class="datatable"><div class="pages"></div><div><table class="table" id="table" ><thead><tr>';
 	for (var i = 0; i < tableth.length; i++) {
 		resultcontent = resultcontent + '<th title='+ tableth[i] +'>'+ tableth[i] +'</th>';
@@ -82,9 +82,8 @@ function QueryInvite(phone) {
 	var endtime = $("#endtime").val();
 	var startdate = new Date(starttime);
 	var enddate = new Date(endtime);
-	var info = "查询时间范围：" + starttime.Format("yyyy-MM-dd mm:ss") + "-" + enddate.Format("yyyy-MM-dd mm:ss");
+	var info = "查询时间范围：" + startdate.Format("yyyy/MM/dd hh:mm") + " - " + enddate.Format("yyyy/MM/dd hh:mm") + "，" + "有效消费总额≥" + $("#validspending").val();
 	console.log(info);
-	enddate = new Date(enddate.setDate(enddate.getDate() + 1));
 	starttime = startdate.getTime() / 1000;
 	endtime = enddate.getTime() / 1000;
 	$.ajax({
@@ -100,13 +99,13 @@ function QueryInvite(phone) {
 			dataType: "json",
 			success: function (data) {
 				//console.log(data);
-				CreateInviteTable(data);
+				CreateInviteTable(data,info);
 				//console.log( Object.keys(data.data[0].level).length);
 			}
 		});
 }
 
-function CreateInviteTable(data){
+function CreateInviteTable(data,info){
 	var table=$("table");
 	table.find("tbody").remove();
 	var tbody="<tbody>";
@@ -120,10 +119,10 @@ function CreateInviteTable(data){
 			var newValidCustomer = parseInt(data.data[i].level[j].newValidCustomer);
 			var newTotalConsume = parseInt(data.data[i].level[j].newTotalConsume) / 100;
 			var totalCustomer = parseInt(data.data[i].level[j].totalCustomer);
-			var Totalspending = $("#Totalspending").val()*1.0;
-			var Totalspendingreduce = $("#Totalspendingreduce").val()*1.0;
-			var validuserreduce = $("#validuserreduce").val()*1.0;
 			var validuser = $("#validuser").val()*1.0;
+			var Totalspending = $("#Totalspending").val()*1.0;
+			var validuserreduce = $("#validuserreduce").val()*1.0;
+			var Totalspendingreduce = $("#Totalspendingreduce").val()*1.0;
 			var redpacket=newValidCustomer*validuser*Math.pow(validuserreduce,j-1)+newTotalConsume*Totalspending*Math.pow(Totalspendingreduce,j-1);
 			redpacket=redpacket.toFixed(2)*1.0;
 			total[i]+=redpacket;
@@ -135,6 +134,8 @@ function CreateInviteTable(data){
 			tbody += tr;
 		}
 	}
+	var infotr = '<tr><td colspan="7">' + info + "，有效用户权重=" + validuser + "，消费总额权重=" + Totalspending + "，有效用户递减系数=" + validuserreduce + "，消费总额递减系数=" + Totalspendingreduce + '</td></tr>'
+	tbody += infotr;
 	tbody += "</tbody>";
 	table.append(tbody);
 	var row=1;

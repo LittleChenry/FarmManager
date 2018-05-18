@@ -122,6 +122,12 @@ input[type="file"] {
 	width: 150px;
 }
 
+input[type="number"] {
+	height: 18px;
+	width: 78px;
+	padding-left: 2px;
+}
+
 textarea {
 	width: 300px;
 }
@@ -194,8 +200,7 @@ textarea {
 	max-width: 100%;
 	table-layout: fixed;
 	margin: auto;
-	border: 1px solid;
-    border-style: groove;
+	border: 1px groove;
 }
 
 .table thead th {
@@ -208,6 +213,7 @@ textarea {
     color: #000;
     text-align: center;
     max-width: 230px;
+	border: 1px groove;
 }
 
 .table tr, .table th {
@@ -220,7 +226,6 @@ textarea {
     font-size: 14px;
     width: 150px;
     font-family: Verdana;
-    font-weight: bold;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
