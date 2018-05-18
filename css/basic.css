@@ -194,6 +194,8 @@ textarea {
 	max-width: 100%;
 	table-layout: fixed;
 	margin: auto;
+	border: 1px solid;
+    border-style: groove;
 }
 
 .table thead th {
