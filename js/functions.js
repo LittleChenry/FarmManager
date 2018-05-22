@@ -117,24 +117,29 @@ function CreateInviteTable(data,info){
 		total[i]=0;
 		var len=Object.keys(data.data[i].level).length;
 		var newCustomer = parseInt(data.data[i].phone);
-		var tr='<tr><td rowspan="'+(len-1)+'">'+ data.data[i].phone +'</td>';
-		for(var j = 1; j < len; j++){		
-			var newValidCustomer = parseInt(data.data[i].level[j].newValidCustomer);
-			var newTotalConsume = parseInt(data.data[i].level[j].newTotalConsume) / 100;
-			var totalCustomer = parseInt(data.data[i].level[j].totalCustomer);
-			var validuser = $("#validuser").val()*1.0;
-			var Totalspending = $("#Totalspending").val()*1.0;
-			var validuserreduce = $("#validuserreduce").val()*1.0;
-			var Totalspendingreduce = $("#Totalspendingreduce").val()*1.0;
-			var redpacket=newValidCustomer*validuser*Math.pow(validuserreduce,j-1)+newTotalConsume*Totalspending*Math.pow(Totalspendingreduce,j-1);
-			redpacket=redpacket.toFixed(2)*1.0;
-			total[i]+=redpacket;
-			if(j==1){
-				tr += '<td>'+ j +'</td><td>'+ totalCustomer +'</td><td>'+ newValidCustomer +'</td><td>'+ newTotalConsume +'</td><td>'+ redpacket +'</td><td rowspan="'+(len-1)+'"></td></tr>';
-			}else{
-				tr='<tr><td>'+ j +'</td><td>'+ totalCustomer +'</td><td>'+ newValidCustomer +'</td><td>'+ newTotalConsume +'</td><td>'+ redpacket +'</td></tr>';
+		if (len==1) {
+			var tr='<tr><td>'+ data.data[i].phone +'</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
+			tbody+=tr;
+		}else{
+			var tr='<tr><td rowspan="'+(len-1)+'">'+ data.data[i].phone +'</td>';
+			for(var j = 1; j < len; j++){
+				var newValidCustomer = parseInt(data.data[i].level[j].newValidCustomer);
+				var newTotalConsume = parseInt(data.data[i].level[j].newTotalConsume) / 100;
+				var totalCustomer = parseInt(data.data[i].level[j].totalCustomer);
+				var validuser = $("#validuser").val()*1.0;
+				var Totalspending = $("#Totalspending").val()*1.0;
+				var validuserreduce = $("#validuserreduce").val()*1.0;
+				var Totalspendingreduce = $("#Totalspendingreduce").val()*1.0;
+				var redpacket=newValidCustomer*validuser*Math.pow(validuserreduce,j-1)+newTotalConsume*Totalspending*Math.pow(Totalspendingreduce,j-1);
+				redpacket=redpacket.toFixed(2)*1.0;
+				total[i]+=redpacket;
+				if(j==1){
+					tr += '<td>'+ j +'</td><td>'+ totalCustomer +'</td><td>'+ newValidCustomer +'</td><td>'+ newTotalConsume +'</td><td>'+ redpacket +'</td><td rowspan="'+(len-1)+'"></td></tr>';
+				}else{
+					tr='<tr><td>'+ j +'</td><td>'+ totalCustomer +'</td><td>'+ newValidCustomer +'</td><td>'+ newTotalConsume +'</td><td>'+ redpacket +'</td></tr>';
+				}
+				tbody += tr;
 			}
-			tbody += tr;
 		}
 	}
 	var infotr = '<tr><td colspan="7">' + info + "，有效用户权重=" + validuser + "，消费总额权重=" + Totalspending + "，有效用户递减系数=" + validuserreduce + "，消费总额递减系数=" + Totalspendingreduce + '</td></tr>'
@@ -142,20 +147,28 @@ function CreateInviteTable(data,info){
 	tbody += "</tbody>";
 	table.append(tbody);
 	var row=1;
-	for (var i = 0; i < data.data.length; i++) {
+	for (var i = 0; i < data.data.length; i++) {		
 		if(i>0){
-			row+=Object.keys(data.data[i-1].level).length-1;
+			if(Object.keys(data.data[i-1].level).length==1){
+				row+=1;
+			}else{
+				row+=Object.keys(data.data[i-1].level).length-1;
+			}
 		}	
-		$("tr:eq("+row+") td:eq(6)").html(total[i].toFixed(2));
+		if(Object.keys(data.data[i].level).length==1){
+			$("tr:eq("+row+") td:eq(6)").html();
+		}else{
+			$("tr:eq("+row+") td:eq(6)").html(total[i].toFixed(2));
+		}
 	}
 }
 
 function LoadCache(){
-	$.ajax({
+	/*$.ajax({
 		type: "post",
 		async: true,
 		url: "/initCache"
-	});
+	});*/
 }
 
 var tableToExcel = (function() {
