@@ -125,7 +125,7 @@ function CreateInviteTable(data,info){
 			for(var j = 1; j < len; j++){
 				var newValidCustomer = parseInt(data.data[i].level[j].newValidCustomer);
 				var newTotalConsume = parseInt(data.data[i].level[j].newTotalConsume) / 100;
-				var totalCustomer = parseInt(data.data[i].level[j].totalCustomer);
+				var totalCustomer = parseInt(data.data[i].level[j].newCustomer);
 				var validuser = $("#validuser").val()*1.0;
 				var Totalspending = $("#Totalspending").val()*1.0;
 				var validuserreduce = $("#validuserreduce").val()*1.0;
