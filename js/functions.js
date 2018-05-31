@@ -14,9 +14,9 @@ function invitation() {
 	var tableth = new Array("用户","级数","邀请数/人","有效用户/人","消费总额/￥","应发奖励/￥","应发总奖励/￥");
 	contentMain(title,tableth);
 	$(".filter span").after('<ul></ul>');
-	$(".filter ul").append('<li><span>查询时间范围：<input id="starttime" type="datetime-local" class="" > - <input id="endtime" type="datetime-local" class="" ></span><span>有效消费总额≥<input id="validspending" type="number" class="" placeholder="￥"></span></li>');
+	$(".filter ul").append('<li><span>查询时间范围：<input id="starttime" type="datetime-local" class="" > - <input id="endtime" type="datetime-local" class="" ></span><span>有效消费总额≥<input id="validspending" type="number" class="" value=15></span></li>');
 	//$(".filter ul").append('<li><span>有效消费总额≥<input id="validspending" type="number" class="" placeholder="￥"></span></li>');
-	$(".filter ul").append('<li><span>有效用户权重= <input id="validuser" type="number" class="" value=0.1></span><span>消费总额权重= <input id="Totalspending" type="number" class="" value=0.1></span><span>有效用户递减系数= <input id="validuserreduce" type="number" class="" value=0.1></span><span>消费总额递减系数= <input id="Totalspendingreduce" type="number" class="" value=0.1></span></li>');
+	$(".filter ul").append('<li><span>有效用户权重= <input id="validuser" type="number" class="" value=1></span><span>消费总额权重= <input id="Totalspending" type="number" class="" value=0></span><span>有效用户递减系数= <input id="validuserreduce" type="number" class="" value=0.6></span><span>消费总额递减系数= <input id="Totalspendingreduce" type="number" class="" value=1></span></li>');
 	$("#output").after('<button id="refresh" type="button" class="">刷新数据</button>');
 	$("#query").unbind("click").bind("click",function(){
 		QueryInvite($("#search").val());
@@ -24,8 +24,8 @@ function invitation() {
 	$("#refresh").unbind("click").bind("click",function(){
 		LoadCache();
 	});
-	$("#validspending").val(0);
-	$("#validspendingcharge").val(0);
+	//$("#validspending").val(0);
+	//$("#validspendingcharge").val(0);
 	var currentDate = new Date();
 	$("#starttime").val(currentDate.Format("yyyy-MM-dd") + "T00:00");
 	$("#endtime").val(currentDate.Format("yyyy-MM-dd") + "T23:59");
