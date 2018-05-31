@@ -140,7 +140,7 @@ function CreateInviteTable(data,info){
 				}
 				tbody += tr;
 			}
-		}
+		}//
 	}
 	var infotr = '<tr><td colspan="7">' + info + "，有效用户权重=" + validuser + "，消费总额权重=" + Totalspending + "，有效用户递减系数=" + validuserreduce + "，消费总额递减系数=" + Totalspendingreduce + '</td></tr>'
 	tbody += infotr;
