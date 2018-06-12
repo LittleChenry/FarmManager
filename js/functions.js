@@ -77,6 +77,8 @@ function QueryInvite(phone) {
 		console.log("有空未填");
 		return false;
 	}
+	$("table").css("position","relative");
+	$("thead").after("<img id='loadimg' src='../img/load.gif' style='position:absolute;left:45%'/>");
 	var list = phone.split(";");
 	console.log(list);
 	var validspending = parseInt($("#validspending").val()).toFixed(2) * 100;
@@ -110,15 +112,21 @@ function QueryInvite(phone) {
 
 function CreateInviteTable(data,info){
 	var table=$("table");
+	$("#loadimg").remove();
 	table.find("tbody").remove();
 	var tbody="<tbody>";
 	var total=new Array();
 	for (var i = 0; i < data.data.length; i++) {
 		total[i]=0;
+		if(data.data[i].level==null){
+			var tr='<tr><td>'+ data.data[i].phone +'</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
+			tbody+=tr;
+			continue;
+		}
 		var len=Object.keys(data.data[i].level).length;
 		var newCustomer = parseInt(data.data[i].phone);
 		if (len==1) {
-			var tr='<tr><td>'+ data.data[i].phone +'</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
+			var tr='<tr><td>'+ data.data[i].phone +'</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>';
 			tbody+=tr;
 		}else{
 			var tr='<tr><td rowspan="'+(len-1)+'">'+ data.data[i].phone +'</td>';
@@ -149,16 +157,24 @@ function CreateInviteTable(data,info){
 	var row=1;
 	for (var i = 0; i < data.data.length; i++) {		
 		if(i>0){
-			if(Object.keys(data.data[i-1].level).length==1){
-				row+=1;
+			if(data.data[i-1].level!=null){
+				if(Object.keys(data.data[i-1].level).length==1){
+					row+=1;
+				}else{
+					row+=Object.keys(data.data[i-1].level).length-1;
+				}
 			}else{
-				row+=Object.keys(data.data[i-1].level).length-1;
+				row+=1;
 			}
-		}	
-		if(Object.keys(data.data[i].level).length==1){
+		}
+		if(data.data[i].level==null){
 			$("tr:eq("+row+") td:eq(6)").html();
-		}else{
-			$("tr:eq("+row+") td:eq(6)").html(total[i].toFixed(2));
+		}else{	
+			if(Object.keys(data.data[i].level).length==1){
+				$("tr:eq("+row+") td:eq(6)").html(0);
+			}else{
+				$("tr:eq("+row+") td:eq(6)").html(total[i].toFixed(2));
+			}
 		}
 	}
 }
