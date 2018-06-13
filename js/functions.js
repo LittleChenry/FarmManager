@@ -104,7 +104,11 @@ function QueryInvite(phone) {
 		dataType: "json",
 		success: function (data) {
 			//console.log(data);
-			CreateInviteTable(data,info);
+			if(data.success==true){
+				CreateInviteTable(data,info);
+			}else{
+				alert("后台数据处理中，请稍后！");
+			}
 			//console.log( Object.keys(data.data[0].level).length);
 		}
 	});
@@ -116,6 +120,10 @@ function CreateInviteTable(data,info){
 	table.find("tbody").remove();
 	var tbody="<tbody>";
 	var total=new Array();
+	var validuser = $("#validuser").val()*1.0;
+	var Totalspending = $("#Totalspending").val()*1.0;
+	var validuserreduce = $("#validuserreduce").val()*1.0;
+	var Totalspendingreduce = $("#Totalspendingreduce").val()*1.0;
 	for (var i = 0; i < data.data.length; i++) {
 		total[i]=0;
 		if(data.data[i].level==null){
@@ -133,11 +141,7 @@ function CreateInviteTable(data,info){
 			for(var j = 1; j < len; j++){
 				var newValidCustomer = parseInt(data.data[i].level[j].newValidCustomer);
 				var newTotalConsume = parseInt(data.data[i].level[j].newTotalConsume) / 100;
-				var totalCustomer = parseInt(data.data[i].level[j].newCustomer);
-				var validuser = $("#validuser").val()*1.0;
-				var Totalspending = $("#Totalspending").val()*1.0;
-				var validuserreduce = $("#validuserreduce").val()*1.0;
-				var Totalspendingreduce = $("#Totalspendingreduce").val()*1.0;
+				var totalCustomer = parseInt(data.data[i].level[j].newCustomer);				
 				var redpacket=newValidCustomer*validuser*Math.pow(validuserreduce,j-1)+newTotalConsume*Totalspending*Math.pow(Totalspendingreduce,j-1);
 				redpacket=redpacket.toFixed(2)*1.0;
 				total[i]+=redpacket;
