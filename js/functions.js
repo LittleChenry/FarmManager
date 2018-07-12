@@ -31,6 +31,29 @@ function invitation() {
 	$("#endtime").val(currentDate.Format("yyyy-MM-dd") + "T23:59");
 }
 
+function charge() {
+	var title = "充值统计";
+	var tableth = new Array("用户","级数","邀请人数","（邀请人数的）充值人数","充值总金额/￥" );
+	contentMain(title,tableth);
+	$(".filter span").after('<ul></ul>');
+	$(".filter ul").append('<li><span>邀请查询时间范围：<input id="starttime" type="datetime-local" class="" > - <input id="endtime" type="datetime-local" class="" ></span></li>');
+	$(".filter ul").append('<li><span>充值查询时间范围：<input id="starttime1" type="datetime-local" class="" > - <input id="endtime1" type="datetime-local" class="" ></span></li>');
+	
+	$("#output").after('<button id="refresh" type="button" class="">刷新数据</button>');
+	$("#query").unbind("click").bind("click",function(){
+		QueryCharge($("#search").val());
+	});
+	$("#refresh").unbind("click").bind("click",function(){
+		LoadCache();
+	});
+	//$("#validspending").val(0);
+	//$("#validspendingcharge").val(0);
+	var currentDate = new Date();
+	$("#starttime").val(currentDate.Format("yyyy-MM-dd") + "T00:00");
+	$("#endtime").val(currentDate.Format("yyyy-MM-dd") + "T23:59");
+	$("#starttime1").val(currentDate.Format("yyyy-MM-dd") + "T00:00");
+	$("#endtime1").val(currentDate.Format("yyyy-MM-dd") + "T23:59");
+}
 function defaultFunction() {
 	var content = $(".content");
 	content.html("");
@@ -70,6 +93,84 @@ function actionInit() {
 	$("#output").unbind("click").bind("click",function(){
 		tableToExcel("table");
 	});
+}
+function QueryCharge(phone) {
+	if(phone == ""){
+		alert("请填写电话号码");
+	}
+	$("table").css("position","relative");
+	$("thead").after("<img id='loadimg' src='../img/load.gif' style='position:absolute;left:45%'/>");
+	var starttime = $("#starttime").val();
+	var endtime = $("#endtime").val();
+	var startdate = new Date(starttime);
+	var enddate = new Date(endtime);
+	starttime = startdate.getTime() / 1000;
+	endtime = enddate.getTime() / 1000;
+	var startTimeByRecharge = $("#starttime1").val();
+	var endTimeByRecharge = $("#endtime1").val();
+	var startdate1 = new Date(startTimeByRecharge);
+	var enddate1 = new Date(endTimeByRecharge);
+	startTimeByRecharge = startdate1.getTime() / 1000;
+	endTimeByRecharge = enddate1.getTime() / 1000;
+	var info="邀请查询时间范围：" + startdate.Format("yyyy/MM/dd hh:mm") + " - " + enddate.Format("yyyy/MM/dd hh:mm")+"   充值查询时间范围：" + startdate1.Format("yyyy/MM/dd hh:mm") + " - " + enddate1.Format("yyyy/MM/dd hh:mm");
+	$.ajax({
+		type: "get",
+		async: true,
+		url: "/recharge",
+		data:{
+			phone : phone,			
+			startTime : starttime,
+			endTime : endtime,
+			startTimeByRecharge:startTimeByRecharge,
+			endTimeByRecharge:endTimeByRecharge
+		},
+		dataType: "json",
+		success: function (data) {
+			//console.log(data);
+			if(data.success==true){
+				CreateChargeTable(data,info);
+			}else{
+				alert("后台数据处理中，请稍后！");
+			}
+			//console.log( Object.keys(data.data[0].level).length);
+		}
+	});
+}
+function CreateChargeTable(data,info){
+	var table=$("table");
+	$("#loadimg").remove();
+	table.find("tbody").remove();
+	var tbody="<tbody>";
+	for (var i = 0; i < data.data.length; i++) {	
+		if(data.data[i].level==null){
+			var tr='<tr><td>'+ data.data[i].phone +'</td><td></td><td></td><td></td><td></td></tr>';
+			tbody+=tr;
+			continue;
+		}
+		var len=Object.keys(data.data[i].level).length;
+		
+		if (len==1) {
+			var tr='<tr><td>'+ data.data[i].phone +'</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>';
+			tbody+=tr;
+		}else{
+			var tr='<tr><td rowspan="'+(len-1)+'">'+ data.data[i].phone +'</td>';
+			for(var j = 1; j < len; j++){
+				var newCustomer = parseInt(data.data[i].level[j].newCustomer);
+				var rechargers = parseInt(data.data[i].level[j].rechargers) ;
+				var rechargesValues = parseInt(data.data[i].level[j].rechargesValues)/ 100;								
+				if(j==1){
+					tr += '<td>'+ j +'</td><td>'+ newCustomer +'</td><td>'+ rechargers +'</td><td>'+ rechargesValues +'</td></tr>';
+				}else{
+					tr='<tr><td>'+ j +'</td><td>'+ newCustomer +'</td><td>'+ rechargers +'</td><td>'+ rechargesValues +'</td></tr>';
+				}
+				tbody += tr;
+			}
+		}
+	}
+	var infotr = '<tr><td colspan="5">' + info + '</td></tr>'
+	tbody += infotr;
+	tbody += "</tbody>";
+	table.append(tbody);
 }
 
 function QueryInvite(phone) {
@@ -114,6 +215,7 @@ function QueryInvite(phone) {
 	});
 }
 
+
 function CreateInviteTable(data,info){
 	var table=$("table");
 	$("#loadimg").remove();
@@ -153,6 +255,7 @@ function CreateInviteTable(data,info){
 				tbody += tr;
 			}
 		}//
+
 	}
 	var infotr = '<tr><td colspan="7">' + info + "，有效用户权重=" + validuser + "，消费总额权重=" + Totalspending + "，有效用户递减系数=" + validuserreduce + "，消费总额递减系数=" + Totalspendingreduce + '</td></tr>'
 	tbody += infotr;

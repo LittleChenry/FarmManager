@@ -42,6 +42,9 @@ function ChooseFunction(num) {
 		case 1:
 			invitation();
 			break;
+        case 2:
+            charge();
+        break;
 		default:
 			defaultFunction();
 	}
